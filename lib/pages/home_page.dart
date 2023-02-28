@@ -24,10 +24,64 @@ class _HomePageState extends State<HomePage> {
     Map data = json.decode(response.body);
     List movies = data["results"];
     moviesModel = movies.map((e) => MovieModel.fromJson(e)).toList();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Color(0xff111111),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(14.0),
+        itemCount: moviesModel.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 12.0,
+          crossAxisSpacing: 12.0,
+          childAspectRatio: 0.7,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    "https://image.tmdb.org/t/p/w500${moviesModel[index].posterPath}"),
+              ),
+            ),
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        const Color(0xff111111).withOpacity(0.95),
+                        Colors.transparent,
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      moviesModel[index].originalTitle,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
