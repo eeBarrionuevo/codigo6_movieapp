@@ -59,23 +59,37 @@ class _HomePageState extends State<HomePage> {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        const Color(0xff111111).withOpacity(0.95),
+                        const Color(0xff111111).withOpacity(0.99),
                         Colors.transparent,
                         Colors.transparent,
                       ],
                     ),
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      moviesModel[index].originalTitle,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          moviesModel[index].originalTitle,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Text(
+                          "(${moviesModel[index].releaseDate.year})",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
