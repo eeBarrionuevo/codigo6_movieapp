@@ -1,3 +1,4 @@
+import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/models/movie_model.dart';
 import 'package:codigo6_movieapp/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -15,8 +16,10 @@ class ApiService {
   }
 
   getMovieDetails() async {
-    Uri url = Uri.parse("$apiUrl/movie/505642?api_key=$apiKey&language=en-US");
+    Uri url = Uri.parse("$apiUrl/movie/536554?api_key=$apiKey&language=en-US");
     http.Response response = await http.get(url);
-    Map data = json.decode(response.body);
+    Map<String, dynamic> data = json.decode(response.body);
+    MovieDetailModel movieDetailModel = MovieDetailModel.fromJson(data);
+    print(movieDetailModel);
   }
 }

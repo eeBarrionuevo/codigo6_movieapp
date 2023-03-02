@@ -1,3 +1,4 @@
+import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
 import 'package:codigo6_movieapp/widgets/item_cast_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    ApiService apiService = ApiService();
+    apiService.getMovieDetails();
 
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
