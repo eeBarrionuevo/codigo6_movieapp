@@ -3,6 +3,7 @@ import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
 import 'package:codigo6_movieapp/widgets/item_cast_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
   int idMovie;
@@ -49,7 +50,7 @@ class _DetailPageState extends State<DetailPage> {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          "https://images.wallpapersden.com/image/download/poster-of-dune-2020_bGhmbGmUmZqaraWkpJRoa2lqrWdlamU.jpg",
+                          "https://image.tmdb.org/t/p/w500${movie!.backdropPath}",
                         ),
                       ),
                     ),
@@ -93,7 +94,7 @@ class _DetailPageState extends State<DetailPage> {
                                   width: 3.0,
                                 ),
                                 Text(
-                                  "7.235",
+                                  movie!.voteAverage.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14.0,
@@ -101,7 +102,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                 ),
                                 Text(
-                                  " | 45324",
+                                  " | ${movie!.voteCount}",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14.0,
@@ -113,7 +114,15 @@ class _DetailPageState extends State<DetailPage> {
                             Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    String message =
+                                        "Hola espero que estén bien, por favor me envian lo que falta";
+                                    message = message.replaceAll(" ", "%20");
+                                    Uri url = Uri.parse(
+                                        "https://wa.me/51969461067?text=Hola");
+                                    launchUrl(url,
+                                        mode: LaunchMode.externalApplication);
+                                  },
                                   icon: Icon(
                                     Icons.whatsapp_rounded,
                                     color: Colors.white,
@@ -141,7 +150,7 @@ class _DetailPageState extends State<DetailPage> {
                         Row(
                           children: [
                             Text(
-                              "162 min",
+                              "${movie!.runtime} min",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14.0,
@@ -152,7 +161,7 @@ class _DetailPageState extends State<DetailPage> {
                               width: 10.0,
                             ),
                             Text(
-                              "2022",
+                              movie!.releaseDate.year.toString(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14.0,
@@ -168,21 +177,30 @@ class _DetailPageState extends State<DetailPage> {
                           spacing: 6,
                           runSpacing: -4,
                           children: [
-                            Chip(
-                              label: Text(
-                                "Action",
+                            // ...movie!.genres
+                            //     .map(
+                            //       (e) => Chip(
+                            //         label: Text(
+                            //           e.name,
+                            //         ),
+                            //       ),
+                            //     )
+                            //     .toList(),
+
+                            ...List.generate(
+                              movie!.genres.length,
+                              (index) => Chip(
+                                label: Text(
+                                  movie!.genres[index].name,
+                                ),
                               ),
                             ),
-                            Chip(
-                              label: Text(
-                                "Drama",
-                              ),
-                            ),
-                            Chip(
-                              label: Text(
-                                "Science Fiction",
-                              ),
-                            ),
+
+                            // Chip(
+                            //   label: Text(
+                            //     "Science Fiction",
+                            //   ),
+                            // ),
                           ],
                         ),
                         const SizedBox(
@@ -198,7 +216,11 @@ class _DetailPageState extends State<DetailPage> {
                           height: 24.0,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Uri url = Uri.parse(movie!.homepage);
+                            launchUrl(url,
+                                mode: LaunchMode.externalApplication);
+                          },
                           child: Container(
                             width: double.infinity,
                             height: 56,
@@ -212,7 +234,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ],
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Homepage",
                               style: TextStyle(
                                 color: Colors.white,
@@ -368,7 +390,9 @@ class _DetailPageState extends State<DetailPage> {
                 ],
               ),
             )
-          : const Center(child: CircularProgressIndicator()),
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
