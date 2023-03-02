@@ -15,11 +15,12 @@ class ApiService {
     return moviesModel;
   }
 
-  getMovieDetails() async {
-    Uri url = Uri.parse("$apiUrl/movie/536554?api_key=$apiKey&language=en-US");
+  Future<MovieDetailModel> getMovieDetails(int idMovie) async {
+    Uri url =
+        Uri.parse("$apiUrl/movie/$idMovie?api_key=$apiKey&language=en-US");
     http.Response response = await http.get(url);
     Map<String, dynamic> data = json.decode(response.body);
     MovieDetailModel movieDetailModel = MovieDetailModel.fromJson(data);
-    print(movieDetailModel);
+    return movieDetailModel;
   }
 }

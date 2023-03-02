@@ -1,20 +1,39 @@
+import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
 import 'package:codigo6_movieapp/widgets/item_cast_widget.dart';
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   int idMovie;
   DetailPage({
     required this.idMovie,
   });
 
   @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  MovieDetailModel? movie;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    ApiService apiService = ApiService();
+    movie = await apiService.getMovieDetails(widget.idMovie);
+    print(movie);
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    ApiService apiService = ApiService();
-    apiService.getMovieDetails();
-
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
       body: SingleChildScrollView(
@@ -111,7 +130,7 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "Black Panther: Wakanda Forever",
+                    movie!.originalTitle,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -169,7 +188,7 @@ class DetailPage extends StatelessWidget {
                     height: 4.0,
                   ),
                   Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    movie!.overview,
                     style: TextStyle(
                       color: Colors.white,
                     ),
