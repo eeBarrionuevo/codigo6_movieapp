@@ -3,6 +3,11 @@ import 'package:codigo6_movieapp/widgets/item_cast_widget.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
+  int idMovie;
+  DetailPage({
+    required this.idMovie,
+  });
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -177,10 +182,10 @@ class DetailPage extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.0),
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
-                            Color(0xff5840EE),
-                            Color(0xff973FEF),
+                            kBrandSecondaryColor,
+                            const Color(0xff973FEF),
                           ],
                         ),
                       ),
@@ -241,20 +246,94 @@ class DetailPage extends StatelessWidget {
                   ),
                   Container(
                     color: Colors.amber,
-                    child: GridView.builder(
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                    child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: GridView.builder(
+                        // padding: EdgeInsets.zero,
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1.35,
+                        ),
+                        itemCount: 7,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Image.network(
+                            "https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                            fit: BoxFit.cover,
+                          );
+                        },
                       ),
-                      itemCount: 7,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Image.network(
-                          "https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                          fit: BoxFit.cover,
-                        );
-                      },
                     ),
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  const Text(
+                    "Reviews",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  ExpansionTile(
+                    iconColor: kBrandSecondaryColor,
+                    collapsedIconColor: Colors.white,
+                    childrenPadding: const EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                      vertical: 6.0,
+                    ),
+                    tilePadding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                    ),
+                    title: Row(
+                      children: [
+                        const CircleAvatar(
+                          backgroundColor: Colors.white10,
+                          child: Text(
+                            "7.2",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Juan Manuel Gonzales",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "2022-11-14",
+                              style: TextStyle(
+                                color: Colors.white60,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    children: [
+                      Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 60.0,
