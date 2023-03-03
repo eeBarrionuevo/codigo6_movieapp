@@ -35,15 +35,60 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text(
-                "TotalCinema",
-                style: TextStyle(
-                  fontSize: 28.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    "TotalCinema",
+                    style: TextStyle(
+                      fontSize: 28.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        // color: Colors.amber,
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Action",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Container(
+                              width: 50,
+                              height: 3.5,
+                              color: kBrandSecondaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "Drama",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        "Animation",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Expanded(
