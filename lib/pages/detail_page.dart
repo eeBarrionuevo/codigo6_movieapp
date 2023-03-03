@@ -1,8 +1,10 @@
+import 'package:codigo6_movieapp/models/character_model.dart';
 import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
 import 'package:codigo6_movieapp/widgets/item_cast_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
@@ -17,6 +19,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   MovieDetailModel? movie;
+  List<CharacterModel> characteres = [];
 
   @override
   void initState() {
@@ -28,7 +31,7 @@ class _DetailPageState extends State<DetailPage> {
   getData() async {
     ApiService apiService = ApiService();
     movie = await apiService.getMovieDetails(widget.idMovie);
-    print(movie);
+    characteres = await apiService.getCharacteres(widget.idMovie);
     setState(() {});
   }
 
@@ -129,7 +132,11 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    //Esta película me parecio intesante
+                                    Share.share(
+                                        "Película: ${movie!.originalTitle} | Resumen: ${movie!.overview} | Web: ${movie!.homepage}");
+                                  },
                                   icon: Icon(
                                     Icons.share_outlined,
                                     color: Colors.white,
@@ -261,18 +268,11 @@ class _DetailPageState extends State<DetailPage> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: [
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                              ItemCastWidget(),
-                            ],
+                            children: characteres
+                                .map((e) => ItemCastWidget(
+                                      model: e,
+                                    ))
+                                .toList(),
                           ),
                         ),
                         const SizedBox(

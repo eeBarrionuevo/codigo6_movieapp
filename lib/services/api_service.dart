@@ -1,3 +1,4 @@
+import 'package:codigo6_movieapp/models/character_model.dart';
 import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/models/movie_model.dart';
 import 'package:codigo6_movieapp/utils/constants.dart';
@@ -22,5 +23,17 @@ class ApiService {
     Map<String, dynamic> data = json.decode(response.body);
     MovieDetailModel movieDetailModel = MovieDetailModel.fromJson(data);
     return movieDetailModel;
+  }
+
+  Future<List<CharacterModel>> getCharacteres(int idMovie) async {
+    Uri url = Uri.parse(
+        "$apiUrl/movie/$idMovie/credits?api_key=$apiKey&language=en-US");
+    http.Response response = await http.get(url);
+    Map data = json.decode(response.body);
+    List castList = data["cast"];
+    List<CharacterModel> characteres = [];
+    characteres = castList.map((e) => CharacterModel.fromJson(e)).toList();
+    print(characteres);
+    return characteres;
   }
 }

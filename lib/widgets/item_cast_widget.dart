@@ -1,7 +1,10 @@
+import 'package:codigo6_movieapp/models/character_model.dart';
+import 'package:codigo6_movieapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class ItemCastWidget extends StatelessWidget {
-  const ItemCastWidget({super.key});
+  CharacterModel model;
+  ItemCastWidget({required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +17,17 @@ class ItemCastWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundColor: Colors.white10,
-            backgroundImage: NetworkImage(
-                "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+            backgroundImage: model.profilePath.isNotEmpty
+                ? NetworkImage(apiImageUrl + model.profilePath)
+                : NetworkImage(
+                    "https://st4.depositphotos.com/4329009/19956/v/450/depositphotos_199564354-stock-illustration-creative-vector-illustration-of-default.jpg"),
             radius: 44.0,
           ),
           const SizedBox(
             height: 10.0,
           ),
           Text(
-            "Ramón Diaz Gonzales de los Portales",
+            model.originalName,
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
