@@ -1,6 +1,7 @@
 import 'package:codigo6_movieapp/models/character_model.dart';
 import 'package:codigo6_movieapp/models/image_model.dart';
 import 'package:codigo6_movieapp/models/movie_detail_model.dart';
+import 'package:codigo6_movieapp/models/review_model.dart';
 import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
 import 'package:codigo6_movieapp/utils/constants.dart';
@@ -23,6 +24,7 @@ class _DetailPageState extends State<DetailPage> {
   MovieDetailModel? movie;
   List<CharacterModel> characteres = [];
   List<ImageModel> images = [];
+  List<ReviewModel> reviews = [];
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _DetailPageState extends State<DetailPage> {
     movie = await apiService.getMovieDetails(widget.idMovie);
     characteres = await apiService.getCharacteres(widget.idMovie);
     images = await apiService.getImages(widget.idMovie);
+    reviews = await apiService.getReviews(widget.idMovie);
     setState(() {});
   }
 
@@ -300,7 +303,7 @@ class _DetailPageState extends State<DetailPage> {
                             removeTop: true,
                             child: GridView.builder(
                               // padding: EdgeInsets.zero,
-                              physics: ScrollPhysics(),
+                              physics: const ScrollPhysics(),
                               shrinkWrap: true,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
@@ -332,60 +335,67 @@ class _DetailPageState extends State<DetailPage> {
                         const SizedBox(
                           height: 16.0,
                         ),
-                        ExpansionTile(
-                          iconColor: kBrandSecondaryColor,
-                          collapsedIconColor: Colors.white,
-                          childrenPadding: const EdgeInsets.symmetric(
-                            horizontal: 10.0,
-                            vertical: 6.0,
-                          ),
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                          ),
-                          title: Row(
-                            children: [
-                              const CircleAvatar(
-                                backgroundColor: Colors.white10,
-                                child: Text(
-                                  "7.2",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                        ...reviews
+                            .map(
+                              (e) => ExpansionTile(
+                                iconColor: kBrandSecondaryColor,
+                                collapsedIconColor: Colors.white,
+                                childrenPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0,
+                                  vertical: 6.0,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                tilePadding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                ),
+                                title: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: Colors.white10,
+                                      child: Text(
+                                        e.authorDetails.rating.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          e.author,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          e.createdAt
+                                              .toString()
+                                              .substring(0, 10),
+                                          style: TextStyle(
+                                            color: Colors.white60,
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                                 children: [
                                   Text(
-                                    "Juan Manuel Gonzales",
+                                    e.content,
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    "2022-11-14",
-                                    style: TextStyle(
-                                      color: Colors.white60,
-                                      fontSize: 14.0,
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                          children: [
-                            Text(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                            )
+                            .toList(),
                         const SizedBox(
                           height: 60.0,
                         ),
