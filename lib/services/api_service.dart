@@ -1,4 +1,5 @@
 import 'package:codigo6_movieapp/models/character_model.dart';
+import 'package:codigo6_movieapp/models/image_model.dart';
 import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/models/movie_model.dart';
 import 'package:codigo6_movieapp/utils/constants.dart';
@@ -35,5 +36,15 @@ class ApiService {
     characteres = castList.map((e) => CharacterModel.fromJson(e)).toList();
     print(characteres);
     return characteres;
+  }
+
+  Future<List<ImageModel>> getImages(int idMovie) async {
+    Uri url = Uri.parse("$apiUrl/movie/$idMovie/images?api_key=$apiKey");
+    http.Response response = await http.get(url);
+    Map data = json.decode(response.body);
+    List images = data["backdrops"];
+    List<ImageModel> imagesModel = [];
+    imagesModel = images.map((e) => ImageModel.fromJson(e)).toList();
+    return imagesModel;
   }
 }

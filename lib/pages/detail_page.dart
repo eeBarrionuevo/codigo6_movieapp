@@ -1,7 +1,9 @@
 import 'package:codigo6_movieapp/models/character_model.dart';
+import 'package:codigo6_movieapp/models/image_model.dart';
 import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
+import 'package:codigo6_movieapp/utils/constants.dart';
 import 'package:codigo6_movieapp/widgets/item_cast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -20,6 +22,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   MovieDetailModel? movie;
   List<CharacterModel> characteres = [];
+  List<ImageModel> images = [];
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _DetailPageState extends State<DetailPage> {
     ApiService apiService = ApiService();
     movie = await apiService.getMovieDetails(widget.idMovie);
     characteres = await apiService.getCharacteres(widget.idMovie);
+    images = await apiService.getImages(widget.idMovie);
     setState(() {});
   }
 
@@ -299,14 +303,15 @@ class _DetailPageState extends State<DetailPage> {
                               physics: ScrollPhysics(),
                               shrinkWrap: true,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 childAspectRatio: 1.35,
                               ),
-                              itemCount: 7,
+                              itemCount: images.length ~/ 2,
                               itemBuilder: (BuildContext context, int index) {
                                 return Image.network(
-                                  "https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                  // apiImageUrl + images[index].filePath,
+                                  "$apiImageUrl${images[index].filePath}",
                                   fit: BoxFit.cover,
                                 );
                               },
