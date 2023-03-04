@@ -3,6 +3,7 @@ import 'package:codigo6_movieapp/models/movie_model.dart';
 import 'package:codigo6_movieapp/pages/detail_page.dart';
 import 'package:codigo6_movieapp/services/api_service.dart';
 import 'package:codigo6_movieapp/ui/general/colors.dart';
+import 'package:codigo6_movieapp/widgets/item_filter_widget.dart';
 import 'package:codigo6_movieapp/widgets/item_home_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -49,43 +50,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     children: [
-                      Container(
-                        // color: Colors.amber,
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Action",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(
-                              width: 50,
-                              height: 3.5,
-                              color: kBrandSecondaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        "Drama",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        "Animation",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      ItemFilterWidget(),
+                      ItemFilterWidget(),
+                      ItemFilterWidget(),
+                      ItemFilterWidget(),
+                      ItemFilterWidget(),
                     ],
                   ),
                 ],
