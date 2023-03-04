@@ -48,14 +48,28 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Row(
-                    children: [
-                      ItemFilterWidget(),
-                      ItemFilterWidget(),
-                      ItemFilterWidget(),
-                      ItemFilterWidget(),
-                      ItemFilterWidget(),
-                    ],
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: [
+                        ItemFilterWidget(
+                          text: "Action",
+                          isSelected: true,
+                        ),
+                        ItemFilterWidget(
+                          text: "Drama",
+                          isSelected: false,
+                        ),
+                        ItemFilterWidget(
+                          text: "Animation",
+                          isSelected: false,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

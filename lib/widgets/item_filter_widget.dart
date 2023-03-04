@@ -2,7 +2,12 @@ import 'package:codigo6_movieapp/ui/general/colors.dart';
 import 'package:flutter/material.dart';
 
 class ItemFilterWidget extends StatelessWidget {
-  const ItemFilterWidget({super.key});
+  String text;
+  bool isSelected;
+  ItemFilterWidget({
+    required this.text,
+    required this.isSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +16,7 @@ class ItemFilterWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Action",
+            text,
             style: TextStyle(
               fontSize: 16.0,
               color: Colors.white,
