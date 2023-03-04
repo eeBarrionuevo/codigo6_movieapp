@@ -16,7 +16,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<MovieModel> moviesModel = [];
+  List<MovieModel> moviesModelTemp = [];
   List<GenreModel> genres = [];
+  int idFilter = 0;
 
   @override
   void initState() {
@@ -27,7 +29,16 @@ class _HomePageState extends State<HomePage> {
   getData() async {
     ApiService apiService = ApiService();
     moviesModel = await apiService.getMovies();
+    moviesModelTemp = moviesModel;
     genres = await apiService.getGenres();
+    genres.insert(0, GenreModel(id: 0, name: "All"));
+    setState(() {});
+  }
+
+  filterMovie(int id) {
+    moviesModel = moviesModelTemp;
+    moviesModel =
+        moviesModel.where((element) => element.genreIds.contains(id)).toList();
     setState(() {});
   }
 
@@ -58,32 +69,19 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: Row(
-                      children: [
-                        ItemFilterWidget(
-                          text: "Action",
-                          isSelected: false,
-                        ),
-                        ItemFilterWidget(
-                          text: "Drama",
-                          isSelected: false,
-                        ),
-                        ItemFilterWidget(
-                          text: "Animation",
-                          isSelected: true,
-                        ),
-                        ItemFilterWidget(
-                          text: "Action",
-                          isSelected: false,
-                        ),
-                        ItemFilterWidget(
-                          text: "Drama",
-                          isSelected: false,
-                        ),
-                        ItemFilterWidget(
-                          text: "Animation",
-                          isSelected: true,
-                        ),
-                      ],
+                      children: genres
+                          .map(
+                            (e) => ItemFilterWidget(
+                              text: e.name,
+                              isSelected: e.id == idFilter,
+                              onTap: () {
+                                idFilter = e.id;
+                                // setState(() {});
+                                filterMovie(idFilter);
+                              },
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ],
