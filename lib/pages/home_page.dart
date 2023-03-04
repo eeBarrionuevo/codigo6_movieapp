@@ -19,26 +19,44 @@ class _HomePageState extends State<HomePage> {
   List<MovieModel> moviesModelTemp = [];
   List<GenreModel> genres = [];
   int idFilter = 0;
+  int counterPage = 1;
+  ScrollController movieScrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     getData();
+    movieScrollController.addListener(() {
+      if (movieScrollController.offset >=
+          movieScrollController.position.maxScrollExtent) {
+        getMovies();
+      }
+    });
   }
 
   getData() async {
     ApiService apiService = ApiService();
-    moviesModel = await apiService.getMovies();
-    moviesModelTemp = moviesModel;
+    await getMovies();
     genres = await apiService.getGenres();
     genres.insert(0, GenreModel(id: 0, name: "All"));
     setState(() {});
   }
 
+  getMovies() async {
+    ApiService apiService = ApiService();
+    moviesModel = [...moviesModel, ...await apiService.getMovies(counterPage)];
+    moviesModelTemp = moviesModel;
+    setState(() {});
+    counterPage++;
+  }
+
   filterMovie(int id) {
     moviesModel = moviesModelTemp;
-    moviesModel =
-        moviesModel.where((element) => element.genreIds.contains(id)).toList();
+    if (id != 0) {
+      moviesModel = moviesModel
+          .where((element) => element.genreIds.contains(id))
+          .toList();
+    }
     setState(() {});
   }
 
@@ -89,8 +107,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: GridView.builder(
+                controller: movieScrollController,
                 shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
+                // physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(14.0),
                 itemCount: moviesModel.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

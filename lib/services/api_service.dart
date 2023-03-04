@@ -9,8 +9,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  Future<List<MovieModel>> getMovies() async {
-    Uri url = Uri.parse("$apiUrl/discover/movie?api_key=$apiKey&page=1");
+  Future<List<MovieModel>> getMovies(int page) async {
+    print("MOVIES!!!!!!!!");
+    Uri url = Uri.parse("$apiUrl/discover/movie?api_key=$apiKey&page=$page");
     http.Response response = await http.get(url);
     Map data = json.decode(response.body);
     List movies = data["results"];
