@@ -44,8 +44,12 @@ class _HomePageState extends State<HomePage> {
 
   getMovies() async {
     ApiService apiService = ApiService();
-    moviesModel = [...moviesModel, ...await apiService.getMovies(counterPage)];
+    moviesModel = [
+      ...moviesModelTemp,
+      ...await apiService.getMovies(counterPage)
+    ];
     moviesModelTemp = moviesModel;
+    filterMovie(idFilter);
     setState(() {});
     counterPage++;
   }
@@ -58,6 +62,12 @@ class _HomePageState extends State<HomePage> {
           .toList();
     }
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    movieScrollController.dispose();
   }
 
   @override
