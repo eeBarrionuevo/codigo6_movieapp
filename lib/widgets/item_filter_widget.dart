@@ -19,15 +19,20 @@ class ItemFilterWidget extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 16.0,
-              color: Colors.white,
+              color: isSelected ? Colors.white : Colors.white38,
               fontWeight: FontWeight.w500,
             ),
           ),
-          Container(
-            width: 50,
-            height: 3.5,
-            color: kBrandSecondaryColor,
-          ),
+          isSelected
+              ? Container(
+                  width: 50,
+                  height: 3.5,
+                  decoration: BoxDecoration(
+                    color: kBrandSecondaryColor,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

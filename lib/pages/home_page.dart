@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         ItemFilterWidget(
                           text: "Action",
-                          isSelected: true,
+                          isSelected: false,
                         ),
                         ItemFilterWidget(
                           text: "Drama",
@@ -66,7 +66,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ItemFilterWidget(
                           text: "Animation",
+                          isSelected: true,
+                        ),
+                        ItemFilterWidget(
+                          text: "Action",
                           isSelected: false,
+                        ),
+                        ItemFilterWidget(
+                          text: "Drama",
+                          isSelected: false,
+                        ),
+                        ItemFilterWidget(
+                          text: "Animation",
+                          isSelected: true,
                         ),
                       ],
                     ),
