@@ -1,4 +1,5 @@
 import 'package:codigo6_movieapp/models/character_model.dart';
+import 'package:codigo6_movieapp/models/genre_model.dart';
 import 'package:codigo6_movieapp/models/image_model.dart';
 import 'package:codigo6_movieapp/models/movie_detail_model.dart';
 import 'package:codigo6_movieapp/models/movie_model.dart';
@@ -59,5 +60,17 @@ class ApiService {
     reviewsModel = reviews.map((e) => ReviewModel.fromJson(e)).toList();
     print(reviewsModel);
     return reviewsModel;
+  }
+
+  Future<List<GenreModel>> getGenres() async {
+    Uri url =
+        Uri.parse("$apiUrl/genre/movie/list?api_key=$apiKey&language=en-US");
+    http.Response response = await http.get(url);
+    Map data = json.decode(response.body);
+    List genres = data["genres"];
+    List<GenreModel> genresModel = [];
+    genresModel = genres.map((e) => GenreModel.fromJson(e)).toList();
+    print(genresModel);
+    return genresModel;
   }
 }

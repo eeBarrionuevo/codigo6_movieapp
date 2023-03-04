@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:codigo6_movieapp/models/genre_model.dart';
 import 'package:codigo6_movieapp/models/movie_model.dart';
 import 'package:codigo6_movieapp/pages/detail_page.dart';
 import 'package:codigo6_movieapp/services/api_service.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<MovieModel> moviesModel = [];
+  List<GenreModel> genres = [];
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   getData() async {
     ApiService apiService = ApiService();
     moviesModel = await apiService.getMovies();
+    genres = await apiService.getGenres();
     setState(() {});
   }
 

@@ -1,3 +1,5 @@
+import 'package:codigo6_movieapp/models/genre_model.dart';
+
 class MovieDetailModel {
   MovieDetailModel({
     required this.adult,
@@ -31,7 +33,7 @@ class MovieDetailModel {
   String backdropPath;
   BelongsToCollection? belongsToCollection;
   int budget;
-  List<Genre> genres;
+  List<GenreModel> genres;
   String homepage;
   int id;
   String imdbId;
@@ -61,7 +63,8 @@ class MovieDetailModel {
             ? BelongsToCollection.fromJson(json["belongs_to_collection"])
             : null,
         budget: json["budget"],
-        genres: List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
+        genres: List<GenreModel>.from(
+            json["genres"].map((x) => GenreModel.fromJson(x))),
         homepage: json["homepage"],
         id: json["id"],
         imdbId: json["imdb_id"],
@@ -149,26 +152,6 @@ class BelongsToCollection {
         "name": name,
         "poster_path": posterPath,
         "backdrop_path": backdropPath,
-      };
-}
-
-class Genre {
-  Genre({
-    required this.id,
-    required this.name,
-  });
-
-  int id;
-  String name;
-
-  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-        id: json["id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
       };
 }
 
