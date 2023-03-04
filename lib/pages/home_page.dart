@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   int counterPage = 1;
   ScrollController movieScrollController = ScrollController();
 
+  int value = 1;
+
   @override
   void initState() {
     super.initState();
@@ -110,6 +112,32 @@ class _HomePageState extends State<HomePage> {
                             ),
                           )
                           .toList(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 14.0),
+                    color: Colors.white,
+                    child: DropdownButton(
+                      isExpanded: true,
+                      value: idFilter,
+                      items: genres
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e.id,
+                              child: Text(
+                                e.name,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (int? mandarina) {
+                        idFilter = mandarina!;
+                        filterMovie(idFilter);
+                        setState(() {});
+                      },
                     ),
                   ),
                 ],
